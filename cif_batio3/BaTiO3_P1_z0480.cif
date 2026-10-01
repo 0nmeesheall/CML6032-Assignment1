@@ -1,0 +1,46 @@
+#======================================================================
+# COMPOUND            : BaTiO3  (TETRAGONAL PEROVSKITE, Ti OFF-CENTRED ALONG c)
+# STATE               : Ti z = 0.480   |   LOOP POINT: -Ps  SATURATION, E << -Ec
+# PARENT SG           : P4mm (99), POLAR POINT GROUP 4mm (C4v)
+# FILE SYMMETRY       : P1, SPACE GROUP No. 1 - AS SUPPLIED IN BaTiO3std_P1.cif
+# CELL (UNEDITED)     : LP1 = LP2 = 399.04 pm, LP3 = 410.27 pm, IA = 90 DEGREES
+# Ti OFFSET FROM CELL CENTRE : -8.21 pm ALONG c
+# d(Ti-O1) ABOVE / BELOW     : 213.3 pm / 196.9 pm ; d(Ti-O EQUATORIAL) = 199.7 pm
+# P (POINT CHARGE, Ti(+4, SPIN UNASSIGNED) ONLY) : -0.080 C m^-2
+# PROVENANCE          : ONLY THE Ti FRACTIONAL z WAS EDITED IN BaTiO3std_P1.cif.
+#                       CELL AND OXYGEN SUBLATTICE UNCHANGED, SO P IS A LOWER BOUND
+#                       ON THE MEASURED Ps OF ABOUT 0.26 C m^-2.
+# PREPARED BY         : NISHEAL MICHAEL KALEY (2025CYS7090), CML6032 ASSIGNMENT 1
+#======================================================================
+data_BaTiO3_z048
+
+_chemical_name_common                  'BaTiO3 Ti z=0.480'
+_chemical_formula_sum                  'Ba Ti O3'
+_cell_length_a                         3.990400
+_cell_length_b                         3.990400
+_cell_length_c                         4.102700
+_cell_angle_alpha                      90.000000
+_cell_angle_beta                       90.000000
+_cell_angle_gamma                      90.000000
+_cell_volume                           65.328491
+_space_group_name_H-M_alt              'P 1'
+_space_group_IT_number                 1
+
+loop_
+_space_group_symop_operation_xyz
+   'x, y, z'
+
+loop_
+   _atom_site_label
+   _atom_site_occupancy
+   _atom_site_fract_x
+   _atom_site_fract_y
+   _atom_site_fract_z
+   _atom_site_adp_type
+   _atom_site_U_iso_or_equiv
+   _atom_site_type_symbol
+   Ba1        1.0     0.000000     0.000000     0.000000    Uiso  ? Ba
+   Ti1        1.0     0.500000     0.500000     0.480000    Uiso  ? Ti
+   O1         1.0     0.500000     0.500000     0.000000    Uiso  ? O
+   O2         1.0     0.500000     0.000000     0.500000    Uiso  ? O
+   O3         1.0     0.000000     0.500000     0.500000    Uiso  ? O

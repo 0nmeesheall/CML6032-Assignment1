@@ -1,0 +1,40 @@
+#======================================================================
+# COMPOUND            : CsCl
+# STRUCTURE TYPE      : CsCl TYPE (B2)
+# IDEALIZED PARENT SG : Pm-3m (221)  (RECOVERABLE BY VESTA SYMMETRY SEARCH)
+# FILE SYMMETRY       : P1, SPACE GROUP No. 1 - FULL ATOM BASIS ENUMERATED
+# CELL                : LP1 = LP2 = LP3 = 412.0 pm ; IA12 = IA13 = IA23 = 90 DEGREES
+# COORDINATION        : Cs 8 : Cl 8
+# PROVENANCE          : BUILT FROM BaTiO3std_P1.cif - CELL EDGE RESET, PEROVSKITE
+#                       5-ATOM BASIS DELETED, 2 SITES ADDED AT THE POSITIONS BELOW
+# PREPARED BY         : NISHEAL MICHAEL KALEY (2025CYS7090), CML6032 ASSIGNMENT 1
+#======================================================================
+data_CsCl
+
+_chemical_name_common                  'CsCl'
+_chemical_formula_sum                  'Cs Cl'
+_cell_length_a                         4.120000
+_cell_length_b                         4.120000
+_cell_length_c                         4.120000
+_cell_angle_alpha                      90.000000
+_cell_angle_beta                       90.000000
+_cell_angle_gamma                      90.000000
+_cell_volume                           69.934528
+_space_group_name_H-M_alt              'P 1'
+_space_group_IT_number                 1
+
+loop_
+_space_group_symop_operation_xyz
+   'x, y, z'
+
+loop_
+   _atom_site_label
+   _atom_site_occupancy
+   _atom_site_fract_x
+   _atom_site_fract_y
+   _atom_site_fract_z
+   _atom_site_adp_type
+   _atom_site_U_iso_or_equiv
+   _atom_site_type_symbol
+   Cs1        1.0     0.000000     0.000000     0.000000    Uiso  ? Cs
+   Cl1        1.0     0.500000     0.500000     0.500000    Uiso  ? Cl
