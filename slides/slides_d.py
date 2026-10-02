@@ -222,18 +222,18 @@ def s15():
       ('docx','ONE PAGE, AS THE BRIEF ASKS'),
       ('docs/ video/','PAGES PLAYER, MP4, BUILDER'),
       ('README.md','METHOD, SOURCES AND CHECKS'),
-    ],dy=27,fs=11.5,marker='',headc=CYAN,pad=17)
+      ('part_a_photos/','5 PHOTOS, EDGE FIT, OVERLAYS'),
+    ],dy=25,fs=11.5,marker='',headc=CYAN,pad=17)
     panel(ax,1200,300,600,222)
     T(ax,1230,487,'STILL OUTSTANDING',AMBER,14,'bold')
     bullets(ax,1230,452,[
-      ('[1]','THE TWO SPECIMEN IDENTITIES'),
-      ('','AS ISSUED IN CLASS'),
-      ('[2]','THE MEASURED {100}/{111}'),
-      ('','INTERFACIAL ANGLE'),
-      ('[3]','VIDEO IS SELF-HOSTED AT'),
+      ('[1]','PART A CROSSED-POLARISER CHECK'),
+      ('','NOT YET RUN (CUBIC = DARK ON'),
+      ('','ALL 3 FACE TYPES)'),
+      ('[2]','VIDEO IS SELF-HOSTED AT'),
       ('','docs/index.html, NOT YOUTUBE'),
     ],dy=26,fs=11.5,marker='',headc=RED,pad=5)
     T(ax,120,270,'$ ./verify_all.sh --summary',ORANGE,17)
     T(ax,120,232,'[PASS] 18 CIF PARSE OK  |  9 RADIUS SUMS WITHIN 10 pm  |  9 CN VALUES MATCH THE PROTOTYPE  |  BaTiO3 SUM RULE OK',GREEN,12.5)
-    T(ax,120,196,'[OPEN] TWO ITEMS ABOVE NEED THE AUTHOR; EVERY NUMBER ON THESE SLIDES IS REPRODUCIBLE FROM THE CIF SET',MUTE,12.5)
+    T(ax,120,196,'[OPEN] ITEM [1] NEEDS THE CRYSTALS; EVERY NUMBER ON THESE SLIDES IS REPRODUCIBLE FROM THE CIF SET AND part_a_photos/',MUTE,12.5)
     fig.savefig(OUT+'15.png',facecolor=BG); plt.close(fig)
