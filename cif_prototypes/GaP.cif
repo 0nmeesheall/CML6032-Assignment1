@@ -7,6 +7,9 @@
 # COORDINATION        : Ga 4 : P 4
 # PROVENANCE          : BUILT FROM BaTiO3std_P1.cif - CELL EDGE RESET, PEROVSKITE
 #                       5-ATOM BASIS DELETED, 8 SITES ADDED AT THE POSITIONS BELOW
+# FORMAL CHARGES      : Ga(+0, SPIN UNASSIGNED), P(+0, SPIN UNASSIGNED)
+#                       ZERO CHARGE IS DELIBERATE: GaP IS COVALENT, SO VESTA MUST USE COVALENT
+#                       RADII (Ga 126 pm, P 107 pm), NOT IONIC RADII.
 # PREPARED BY         : NISHEAL MICHAEL KALEY (2025CYS7090), CML6032 ASSIGNMENT 1
 #======================================================================
 data_GaP
@@ -26,6 +29,12 @@ _space_group_IT_number                 1
 loop_
 _space_group_symop_operation_xyz
    'x, y, z'
+
+loop_
+   _atom_type_symbol
+   _atom_type_oxidation_number
+   Ga   +0.0
+   P    +0.0
 
 loop_
    _atom_site_label

@@ -7,6 +7,9 @@
 # COORDINATION        : Au 8 : Zn 8
 # PROVENANCE          : BUILT FROM BaTiO3std_P1.cif - CELL EDGE RESET, PEROVSKITE
 #                       5-ATOM BASIS DELETED, 2 SITES ADDED AT THE POSITIONS BELOW
+# FORMAL CHARGES      : Au(+0, SPIN UNASSIGNED), Zn(+0, SPIN UNASSIGNED)
+#                       ZERO CHARGE IS DELIBERATE: AuZn IS A METALLIC BETA-BRASS TYPE PHASE,
+#                       SO VESTA MUST USE METALLIC RADII (Au 144 pm, Zn 134 pm).
 # PREPARED BY         : NISHEAL MICHAEL KALEY (2025CYS7090), CML6032 ASSIGNMENT 1
 #======================================================================
 data_AuZn
@@ -26,6 +29,12 @@ _space_group_IT_number                 1
 loop_
 _space_group_symop_operation_xyz
    'x, y, z'
+
+loop_
+   _atom_type_symbol
+   _atom_type_oxidation_number
+   Au   +0.0
+   Zn   +0.0
 
 loop_
    _atom_site_label

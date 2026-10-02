@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CML6032 ASSIGNMENT 1 - NISHEAL MICHAEL KALEY - 2025CYS7090</title>
+<style>
+  :root{
+    --bg:#070d0a; --panel:#0d1711; --edge:#1f3a2b; --green:#52e796;
+    --dim:#7ea492; --amber:#e8b964; --cyan:#6fd8e0; --red:#ef6b7a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--green);
+       font:15px/1.55 "Liberation Mono",Menlo,Consolas,monospace}
+  .wrap{max-width:1180px;margin:0 auto;padding:26px 20px 60px}
+  header{border-bottom:1px solid var(--edge);padding-bottom:14px;margin-bottom:22px}
+  h1{font-size:23px;margin:0 0 6px;letter-spacing:.4px}
+  .sub{color:var(--amber);font-size:14px}
+  .meta{color:var(--dim);font-size:13px;margin-top:6px}
+  video{width:100%;background:#000;border:1px solid var(--edge);display:block}
+  .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+       margin:14px 0 24px;color:var(--dim);font-size:13px}
+  a{color:var(--cyan)}
+  a:hover{color:var(--green)}
+  .panel{background:var(--panel);border:1px solid var(--edge);padding:16px 18px;margin-bottom:20px}
+  .panel h2{font-size:14px;color:var(--amber);margin:0 0 12px;letter-spacing:.6px}
+  ol{list-style:none;counter-reset:c;margin:0;padding:0}
+  ol li{counter-increment:c;border-bottom:1px solid #132117}
+  ol li:last-child{border-bottom:0}
+  .ch{display:flex;gap:14px;width:100%;background:none;border:0;cursor:pointer;
+      color:var(--green);font:inherit;text-align:left;padding:8px 6px}
+  .ch:hover{background:#13231a}
+  .ch .n{color:var(--dim);min-width:2.2em}
+  .ch .t{flex:1}
+  .ch .s{color:var(--amber);font-variant-numeric:tabular-nums}
+  .note{color:var(--dim);font-size:13px}
+  .warn{color:var(--red)}
+  footer{border-top:1px solid var(--edge);margin-top:26px;padding-top:14px;
+         color:var(--dim);font-size:12.5px}
+  @media (max-width:620px){.ch .s{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>20261005 CML6032 ASSIGNMENT 1</h1>
+  <div class="sub">MATERIALS CHEMISTRY : STRUCTURAL ANALYSIS</div>
+  <div class="meta">NISHEAL MICHAEL KALEY &nbsp;|&nbsp; ENTRY NO 2025CYS7090 &nbsp;|&nbsp;
+    IIT DELHI &nbsp;|&nbsp; CRYSTAL MORPHOLOGY, PEROVSKITE HYSTERESIS AND NINE BINARY PROTOTYPES</div>
+</header>
+
+<video id="v" controls preload="metadata" poster="poster.png"
+       src="CML6032_Assignment1_Nisheal_2025CYS7090.mp4"></video>
+<div class="bar">
+  <span id="status">SPOKEN WALKTHROUGH, SERVED DIRECTLY FROM THIS REPOSITORY.</span>
+  <a id="dl" href="CML6032_Assignment1_Nisheal_2025CYS7090.mp4" download>DOWNLOAD THE MP4</a>
+  <a href="CML6032_ASSIGNMENT_1_FILES_FOR_DOWNLOAD.pdf" download>DOWNLOAD THE PDF BUNDLE</a>
+</div>
+
+<div class="panel">
+  <h2>CHAPTERS</h2>
+  <ol id="chapters"></ol>
+  <div class="note" id="chsrc"></div>
+</div>
+
+<div class="panel">
+  <h2>SUBMITTED FILES</h2>
+  <div class="note">
+    <a href="https://github.com/0nmeesheall/CML6032-Assignment1">REPOSITORY ROOT</a> &nbsp;&middot;&nbsp;
+    <a href="https://github.com/0nmeesheall/CML6032-Assignment1/blob/main/Nisheal_2025CYS7090_Assignment1.docx">ONE-PAGE ANSWER SHEET</a> &nbsp;&middot;&nbsp;
+    <a href="https://github.com/0nmeesheall/CML6032-Assignment1/tree/main/slides">SLIDE DECK</a> &nbsp;&middot;&nbsp;
+    <a href="https://github.com/0nmeesheall/CML6032-Assignment1/tree/main/cif_prototypes">NINE PROTOTYPE CIF FILES</a> &nbsp;&middot;&nbsp;
+    <a href="https://github.com/0nmeesheall/CML6032-Assignment1/tree/main/cif_batio3">NINE BaTiO3 STATES</a> &nbsp;&middot;&nbsp;
+    <a href="https://github.com/0nmeesheall/CML6032-Assignment1/tree/main/renders">STRUCTURE RENDERS</a> &nbsp;&middot;&nbsp;
+    <a href="https://github.com/0nmeesheall/CML6032-Assignment1/tree/main/figures">HYSTERESIS FIGURE</a>
+  </div>
+</div>
+
+<footer>
+  LENGTHS IN pm, 1 ANGSTROM = 100 pm. RATIOS ARE QUOTED AS RATIOS AND NOT PER 100.
+  SPACE GROUPS CARRY OVERHEAD BARS (m3̅m, Fm3̅m, F4̅3m). EVERY NUMBER IN THE WALKTHROUGH IS REPRODUCIBLE FROM
+  THE CIF SET IN THIS REPOSITORY.
+</footer>
+</div>
+
+<script>
+// FALLBACK MARKS, HARD CODED FROM THE BUILD OF 2026-10-01. BUILD_VIDEO.PY WRITES
+// chapters.json FROM THE MEASURED DURATIONS OF THE RECORDED VOICE NOTES; IF THAT
+// FILE LOADS IT WINS, SO THESE ONLY MATTER IF THE FETCH FAILS.
+var FALLBACK = [
+  [0,"TITLE AND SCOPE"],
+  [56.51,"THE BRIEF: PART A AS ISSUED"],
+  [64.51,"CRYSTAL MORPHOLOGY AND MOST PROBABLE POINT GROUPS"],
+  [140.73,"SPECIMEN 1: CUBO-OCTAHEDRAL HABIT"],
+  [231.84,"SPECIMEN 2: HEXAGONAL PRISMATIC HABIT"],
+  [337.14,"THE BRIEF: PART B SEGMENT 1 AS ISSUED"],
+  [345.14,"PART B SEGMENT 1: FERROELECTRIC DISTORTION OF BaTiO3"],
+  [431.29,"Ti DISPLACEMENT SERIES ALONG c"],
+  [544.55,"NINE DISTORTION STATES: GEOMETRY AND RIGID-ION POLARISATION"],
+  [633.14,"FERROELECTRIC HYSTERESIS: CORRECTED TWO-BRANCH LOOP"],
+  [710.49,"WHY A LOOP AND NOT A LINE: DOUBLE WELL, DOMAINS AND Tc"],
+  [827.12,"THE BRIEF: PART B SEGMENT 2 AS ISSUED"],
+  [835.12,"PART B SEGMENT 2: NINE BINARY CUBIC PROTOTYPES"],
+  [935.62,"ROCK SALT TYPE: NaCl AND CaTe"],
+  [1033.44,"CAESIUM CHLORIDE TYPE: CsCl AND AuZn"],
+  [1130.51,"FLUORITE AND ANTIFLUORITE: CaF2, CeO2 AND K2O"],
+  [1242.3,"ZINC BLENDE TYPE: ZnS AND GaP"],
+  [1341.12,"VERIFICATION, MANIFEST AND WHAT IS STILL MISSING"]
+];
+var v = document.getElementById("v");
+function clock(s){
+  s = Math.round(s);
+  var m = Math.floor(s / 60);
+  return m + ":" + String(s % 60).padStart(2, "0");
+}
+function draw(marks, src){
+  var ol = document.getElementById("chapters");
+  ol.innerHTML = "";
+  marks.forEach(function(m, i){
+    var li = document.createElement("li");
+    var b  = document.createElement("button");
+    b.className = "ch";
+    b.innerHTML = '<span class="n">' + String(i + 1).padStart(2, "0") + '</span>' +
+                  '<span class="t"></span><span class="s">' + clock(m[0]) + '</span>';
+    b.querySelector(".t").textContent = m[1];
+    b.onclick = function(){ v.currentTime = m[0]; v.play(); };
+    li.appendChild(b); ol.appendChild(li);
+  });
+  document.getElementById("chsrc").textContent = src;
+}
+draw(FALLBACK, "TIMINGS FROM THE BUILT IN FALLBACK TABLE.");
+fetch("chapters.json", {cache: "no-store"})
+  .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+  .then(function(j){
+    draw(j.chapters.map(function(c){ return [c.start, c.title]; }),
+         "TIMINGS READ FROM chapters.json, TOTAL " + clock(j.total) + ".");
+  })
+  .catch(function(){});
+v.addEventListener("error", function(){
+  var s = document.getElementById("status");
+  s.className = "warn";
+  s.textContent = "THE MP4 IS NOT PRESENT IN docs/ YET. BUILD IT WITH video/BUILD_VIDEO.py "
+                + "AND COMMIT IT AS docs/CML6032_Assignment1_Nisheal_2025CYS7090.mp4.";
+});
+</script>
+</body>
+</html>

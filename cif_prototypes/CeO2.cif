@@ -7,6 +7,7 @@
 # COORDINATION        : Ce 8 : O 4
 # PROVENANCE          : BUILT FROM BaTiO3std_P1.cif - CELL EDGE RESET, PEROVSKITE
 #                       5-ATOM BASIS DELETED, 12 SITES ADDED AT THE POSITIONS BELOW
+# FORMAL CHARGES      : Ce(+4, SPIN UNASSIGNED), O(-2, SPIN UNASSIGNED)
 # PREPARED BY         : NISHEAL MICHAEL KALEY (2025CYS7090), CML6032 ASSIGNMENT 1
 #======================================================================
 data_CeO2
@@ -26,6 +27,12 @@ _space_group_IT_number                 1
 loop_
 _space_group_symop_operation_xyz
    'x, y, z'
+
+loop_
+   _atom_type_symbol
+   _atom_type_oxidation_number
+   Ce   +4.0
+   O    -2.0
 
 loop_
    _atom_site_label

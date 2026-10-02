@@ -1,0 +1,151 @@
+{
+ "total": 1346.15,
+ "slides": 18,
+ "generator": "BUILD_VIDEO.py, FROM RECORDED VOICE NOTES",
+ "chapters": [
+  {
+   "start": 0.0,
+   "end": 56.51,
+   "duration": 56.51,
+   "title": "TITLE AND SCOPE",
+   "slide": "01",
+   "kind": "answer"
+  },
+  {
+   "start": 56.51,
+   "end": 64.51,
+   "duration": 8.0,
+   "title": "THE BRIEF: PART A AS ISSUED",
+   "slide": "01a",
+   "kind": "question"
+  },
+  {
+   "start": 64.51,
+   "end": 140.73,
+   "duration": 76.23,
+   "title": "CRYSTAL MORPHOLOGY AND MOST PROBABLE POINT GROUPS",
+   "slide": "02",
+   "kind": "answer"
+  },
+  {
+   "start": 140.73,
+   "end": 231.84,
+   "duration": 91.11,
+   "title": "SPECIMEN 1: CUBO-OCTAHEDRAL HABIT",
+   "slide": "03",
+   "kind": "answer"
+  },
+  {
+   "start": 231.84,
+   "end": 337.14,
+   "duration": 105.31,
+   "title": "SPECIMEN 2: HEXAGONAL PRISMATIC HABIT",
+   "slide": "04",
+   "kind": "answer"
+  },
+  {
+   "start": 337.14,
+   "end": 345.14,
+   "duration": 8.0,
+   "title": "THE BRIEF: PART B SEGMENT 1 AS ISSUED",
+   "slide": "04a",
+   "kind": "question"
+  },
+  {
+   "start": 345.14,
+   "end": 431.29,
+   "duration": 86.14,
+   "title": "PART B SEGMENT 1: FERROELECTRIC DISTORTION OF BaTiO3",
+   "slide": "05",
+   "kind": "answer"
+  },
+  {
+   "start": 431.29,
+   "end": 544.55,
+   "duration": 113.27,
+   "title": "Ti DISPLACEMENT SERIES ALONG c",
+   "slide": "06",
+   "kind": "answer"
+  },
+  {
+   "start": 544.55,
+   "end": 633.14,
+   "duration": 88.59,
+   "title": "NINE DISTORTION STATES: GEOMETRY AND RIGID-ION POLARISATION",
+   "slide": "07",
+   "kind": "answer"
+  },
+  {
+   "start": 633.14,
+   "end": 710.49,
+   "duration": 77.35,
+   "title": "FERROELECTRIC HYSTERESIS: CORRECTED TWO-BRANCH LOOP",
+   "slide": "08",
+   "kind": "answer"
+  },
+  {
+   "start": 710.49,
+   "end": 827.12,
+   "duration": 116.63,
+   "title": "WHY A LOOP AND NOT A LINE: DOUBLE WELL, DOMAINS AND Tc",
+   "slide": "09",
+   "kind": "answer"
+  },
+  {
+   "start": 827.12,
+   "end": 835.12,
+   "duration": 8.0,
+   "title": "THE BRIEF: PART B SEGMENT 2 AS ISSUED",
+   "slide": "09a",
+   "kind": "question"
+  },
+  {
+   "start": 835.12,
+   "end": 935.62,
+   "duration": 100.5,
+   "title": "PART B SEGMENT 2: NINE BINARY CUBIC PROTOTYPES",
+   "slide": "10",
+   "kind": "answer"
+  },
+  {
+   "start": 935.62,
+   "end": 1033.44,
+   "duration": 97.82,
+   "title": "ROCK SALT TYPE: NaCl AND CaTe",
+   "slide": "11",
+   "kind": "answer"
+  },
+  {
+   "start": 1033.44,
+   "end": 1130.51,
+   "duration": 97.07,
+   "title": "CAESIUM CHLORIDE TYPE: CsCl AND AuZn",
+   "slide": "12",
+   "kind": "answer"
+  },
+  {
+   "start": 1130.51,
+   "end": 1242.3,
+   "duration": 111.79,
+   "title": "FLUORITE AND ANTIFLUORITE: CaF2, CeO2 AND K2O",
+   "slide": "13",
+   "kind": "answer"
+  },
+  {
+   "start": 1242.3,
+   "end": 1341.12,
+   "duration": 98.83,
+   "title": "ZINC BLENDE TYPE: ZnS AND GaP",
+   "slide": "14",
+   "kind": "answer"
+  },
+  {
+   "start": 1341.12,
+   "end": 1346.15,
+   "duration": 5.03,
+   "title": "VERIFICATION, MANIFEST AND WHAT IS STILL MISSING",
+   "slide": "15",
+   "kind": "answer"
+  }
+ ]
+}

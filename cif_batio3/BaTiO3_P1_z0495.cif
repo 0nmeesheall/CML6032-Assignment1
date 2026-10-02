@@ -10,6 +10,7 @@
 # PROVENANCE          : ONLY THE Ti FRACTIONAL z WAS EDITED IN BaTiO3std_P1.cif.
 #                       CELL AND OXYGEN SUBLATTICE UNCHANGED, SO P IS A LOWER BOUND
 #                       ON THE MEASURED Ps OF ABOUT 0.26 C m^-2.
+# FORMAL CHARGES      : Ba(+2, SPIN UNASSIGNED), Ti(+4, SPIN UNASSIGNED), O(-2, SPIN UNASSIGNED)
 # PREPARED BY         : NISHEAL MICHAEL KALEY (2025CYS7090), CML6032 ASSIGNMENT 1
 #======================================================================
 data_BaTiO3_z0495
@@ -29,6 +30,13 @@ _space_group_IT_number                 1
 loop_
 _space_group_symop_operation_xyz
    'x, y, z'
+
+loop_
+   _atom_type_symbol
+   _atom_type_oxidation_number
+   Ba   +2.0
+   Ti   +4.0
+   O    -2.0
 
 loop_
    _atom_site_label
