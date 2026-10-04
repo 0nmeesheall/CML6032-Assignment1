@@ -218,7 +218,7 @@ def s15():
       ('cif_batio3/','9 FILES, z = 0.480 TO 0.520'),
       ('renders/','9 PNG + 5 BaTiO3 FRAMES'),
       ('figures/','hysteresis_loop.png AND .pdf'),
-      ('slides/','15 ANSWER + 3 QUESTION PNG'),
+      ('slides/','15 ANSWER, 3 QUESTION, 1 NOTICE PNG'),
       ('docx','ONE PAGE, AS THE BRIEF ASKS'),
       ('docs/ video/','PAGES PLAYER, MP4, BUILDER'),
       ('README.md','METHOD, SOURCES AND CHECKS'),
@@ -227,13 +227,18 @@ def s15():
     panel(ax,1200,300,600,222)
     T(ax,1230,487,'STILL OUTSTANDING',AMBER,14,'bold')
     bullets(ax,1230,452,[
-      ('[1]','PART A CROSSED-POLARISER CHECK'),
-      ('','NOT YET RUN (CUBIC = DARK ON'),
-      ('','ALL 3 FACE TYPES)'),
+      ('[1]','PART A CORRECTED AFTER EVALUATION:'),
+      ('','m$\\bar{3}$m TO mmm, NO 3 OR $\\bar{3}$ AXIS;'),
+      ('','POLARISER CHECK STILL NOT RUN'),
       ('[2]','VIDEO IS SELF-HOSTED AT'),
       ('','docs/index.html, NOT YOUTUBE'),
     ],dy=26,fs=11.5,marker='',headc=RED,pad=5)
     T(ax,120,270,'$ ./verify_all.sh --summary',ORANGE,17)
     T(ax,120,232,'[PASS] 18 CIF PARSE OK  |  9 RADIUS SUMS WITHIN 10 pm  |  9 CN VALUES MATCH THE PROTOTYPE  |  BaTiO3 SUM RULE OK',GREEN,12.5)
-    T(ax,120,196,'[OPEN] ITEM [1] NEEDS THE CRYSTALS; EVERY NUMBER ON THESE SLIDES IS REPRODUCIBLE FROM THE CIF SET AND part_a_photos/',MUTE,12.5)
+    T(ax,120,196,'[OPEN] THE POLARISER CHECK NEEDS THE CRYSTALS; EVERY NUMBER ON THESE SLIDES IS REPRODUCIBLE FROM THE CIF SET AND part_a_photos/',MUTE,12.5)
+    # STATUTORY NOTE ON THE RUNNING TIME, ADDED 2026-10-05 AT THE AUTHOR'S REQUEST. ONE SENTENCE,
+    # WRAPPED AT THE CLAUSE SO IT KEEPS THE 12.5 pt OF THE [PASS] AND [OPEN] LINES ABOVE IT.
+    T(ax,120,150,'$ cat STATUTORY_NOTE.txt',ORANGE,17)
+    T(ax,120,112,"BY RPwD 2016 I'M ENTITLED TO A COMPENSATORY TIME OF 1.34 MINUTES PER MINUTE,",AMBER,12.5)
+    T(ax,120,76,"HENCE THE EXCESS TIME CONSIDERS MY PROPENSITY TOWARDS DETAIL WHEN I'M VERY INTERESTED IN A PROJECT; AS WAS THIS.",AMBER,12.5)
     fig.savefig(OUT+'15.png',facecolor=BG); plt.close(fig)

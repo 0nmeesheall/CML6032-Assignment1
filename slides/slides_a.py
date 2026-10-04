@@ -19,7 +19,7 @@ T(ax,150,H-258,'MATERIALS CHEMISTRY : STRUCTURAL ANALYSIS',AMBER,21)
 T(ax,150,H-312,'CRYSTAL MORPHOLOGY, PEROVSKITE HYSTERESIS AND NINE BINARY PROTOTYPES',CYAN,19)
 T(ax,150,H-396,'NISHEAL MICHAEL KALEY',GREEN,20)
 T(ax,150,H-444,'ENTRY NO 2025CYS7090  |  IIT DELHI',GREEN,17)
-T(ax,150,H-488,'10 OCTOBER 2026',GREEN,17)
+T(ax,150,H-488,'SUBMITTED 5 OCTOBER 2026, 02:30 IST  |  DUE 5 OCTOBER 2026, 23:59 IST',GREEN,17)
 T(ax,150,H-566,'$ ./init_pipeline.sh',ORANGE,21)
 for i,l in enumerate(['MODULES INITIALIZED: [PART A: MORPHOLOGY AND POINT GROUPS]',
                       '                     [PART B SEGMENT 1: FERROELECTRIC DISTORTION SERIES]',
@@ -135,6 +135,7 @@ def seg_overlay(a,name,i,cx,cy,r):
         a.text(q[0],q[1],f"{e['corner']:.1f}",color=col,fontsize=11,weight='bold',ha='center',va='center',
                family='monospace',bbox=dict(boxstyle='square,pad=0.15',fc='#05080CDD',ec=col,lw=1.0))
 fig,ax=new_slide('$ ./measure_angles.py --photos 1,4 --edges lsd --report',3)
+T(ax,1800,H-95,'[PART A CORRECTED AFTER EVALUATION, 4 OCT 2026]',RED,13,'bold',ha='right')
 T(ax,120,H-158,'MORPHOLOGY: ONE ANGLE, MANY SHAPES',GREEN,23,'bold')
 T(ax,1800,H-158,'[STENO 1669, TESTED ON THESE CRYSTALS]',AMBER,17,'bold',ha='right')
 # --- left: four fitted crops
@@ -189,7 +190,7 @@ T(ax,1025,180,f"L/W {min(SM['aspect']):.2f} TO {max(SM['aspect']):.2f} IN ONE BA
 T(ax,1025,157,'2-FOLD, THE ANGLE DOES NOT',AMBER,11.5,'bold','center')
 # --- right: idealised habit
 panel(ax,1350,130,450,760)
-T(ax,1575,862,'IDEALISED HABIT: CUBE {100}',CYAN,14,'bold','center')
+T(ax,1575,862,'IDEALISED HABIT: BOX, 3 PINACOIDS',CYAN,14,'bold','center')
 def box(hx,hy,hz):
     V=lambda sx,sy,sz:np.array([sx*hx,sy*hy,sz*hz])
     F=[]
@@ -221,119 +222,132 @@ def drawbox(a,F,az=212,el=22,lab=True,ext=None,lfs=10.5):
     pad=0.35 if ext is None else ext
     a.set_xlim(xy[:,0].min()-pad,xy[:,0].max()+pad); a.set_ylim(xy[:,1].min()-pad,xy[:,1].max()+pad)
     return az,el
-a=fig.add_axes([1380/W,560/H,390/W,270/H]); az,el=drawbox(a,box(1,1,1),ext=0.55)
-for d,c,mk in [((0,0,1),AMBER,'s'),((1,1,1),GREEN,'^'),((0,1,1),'#FF7CA8','D')]:
-    d=np.array(d,float); d=d/np.linalg.norm(d)*(1.62 if mk=='s' else (1.75 if mk=='^' else 1.62))
+# CORRECTED AFTER EVALUATION: THE HABIT IS A BOX WITH THREE UNEQUAL EDGES, NOT A CUBE.
+# A SQUARE CORNER IS 3-FOLD ONLY LOCALLY: THE LINE THROUGH IT ALONG ITS OWN [111] MISSES THE
+# CENTRE, AND A 120-DEGREE TURN ABOUT [111] THROUGH THE CENTRE SENDS L TO W TO T.
+HX,HY,HZ=1.6,1.0,0.65
+PINK='#FF7CA8'
+a=fig.add_axes([1380/W,560/H,390/W,270/H]); az,el=drawbox(a,box(HX,HY,HZ),ext=0.5)
+for d in ((HX,0,0),(0,HY,0),(0,0,HZ)):                      # THE THREE 2-FOLD AXES, FACE TO FACE
+    d=np.array(d,float); d=d+0.45*d/np.linalg.norm(d)
     P,_=proj(np.vstack([-d,d]),az,el)
-    a.plot(P[:,0],P[:,1],color=c,lw=1.6,ls='--',zorder=3)
-    a.plot(P[1,0],P[1,1],mk,ms=9,mfc=c,mec='#04140A',zorder=5)
-T(ax,1575,538,'AMBER 4-FOLD: FACE TO FACE',AMBER,10.5,'bold','center')
-T(ax,1575,516,'GREEN 3-FOLD: CORNER TO CORNER',GREEN,10.5,'bold','center')
-T(ax,1575,494,'PINK 2-FOLD: EDGE TO EDGE',"#FF7CA8",10.5,'bold','center')
-a=fig.add_axes([1380/W,300/H,390/W,170/H]); drawbox(a,box(1.9,0.95,0.95),az=222,el=20,ext=0.3,lfs=9.5)
+    a.plot(P[:,0],P[:,1],color=PINK,lw=1.6,ls='--',zorder=3)
+    a.plot(P[:,0],P[:,1],'D',ms=7.5,mfc=PINK,mec='#04140A',zorder=5,ls='none')
+e1_,e2_,n_=rot(az,el)
+CNR=max([np.array([sx*HX,sy*HY,sz*HZ]) for sx in (1,-1) for sy in (1,-1) for sz in (1,-1)],key=lambda c:np.dot(c,-n_))
+sv=np.sign(CNR)/np.sqrt(3)
+P,_=proj(np.vstack([CNR+0.6*sv,CNR-3.1*sv]),az,el)          # THE CORNER'S LOCAL 3-FOLD LINE
+a.plot(P[:,0],P[:,1],color=GREEN,lw=1.7,ls='--',zorder=6)
+a.plot(P[0,0],P[0,1],'^',ms=9,mfc=GREEN,mec='#04140A',zorder=7)
+O,_=proj(np.zeros((1,3)),az,el); a.plot(O[0,0],O[0,1],'o',ms=6.5,mfc=WHITE,mec='#04140A',zorder=8)
+T(ax,1575,538,'PINK 2-FOLD: FACE TO FACE, 3 OF THEM',PINK,10.5,'bold','center')
+T(ax,1575,516,'GREEN: A SQUARE CORNER IS 3-FOLD ONLY',GREEN,10.5,'bold','center')
+T(ax,1575,494,'LOCALLY; ITS AXIS MISSES THE CENTRE DOT',GREEN,10.5,'bold','center')
+a=fig.add_axes([1380/W,300/H,390/W,170/H]); az2,el2=drawbox(a,box(HX,HY,HZ),az=222,el=20,ext=0.3,lfs=9.5)
+RT=np.array([[0,0,1],[1,0,0],[0,1,0]],float)                # 120 DEGREES ABOUT [111]: x TO y TO z
+VB=np.array([[sx*HX,sy*HY,sz*HZ] for sx in (-1,1) for sy in (-1,1) for sz in (-1,1)]); VR=VB@RT.T
+for i in range(8):
+    for j in range(i+1,8):
+        if np.sum(np.abs(VB[i]-VB[j])>1e-9)==1:
+            P,_=proj(VR[[i,j]],az2,el2); a.plot(P[:,0],P[:,1],color=RED,lw=1.5,ls='--',zorder=3)
+XY,_=proj(np.vstack([VB,VR]),az2,el2)
+a.set_xlim(XY[:,0].min()-0.25,XY[:,0].max()+0.25); a.set_ylim(XY[:,1].min()-0.25,XY[:,1].max()+0.25)
 bullets(ax,1372,268,[
- 'SAME 6 FACES, SAME 90-DEGREE ANGLES;',
- 'ONLY THE CENTRAL DISTANCES DIFFER,',
- 'AS IN C4, C7 AND VIEW B',
+ 'RED: THE BOX TURNED 120 DEGREES ABOUT',
+ '[111] THROUGH THE CENTRE. L, W AND T',
+ 'TRADE PLACES, SO IT MISSES ITSELF',
  None,
- 'FORM: CUBE {100}, 6 FACES = ALL SEEN',
+ 'FORM: 3 PINACOIDS {100}, {010}, {001}',
 ],dy=25,fs=11,marker='',lc=BODY)
 T(ax,120,92,'$ ./measure_angles.py --summary',ORANGE,17)
 T(ax,120,56,f"[RESULT] {SM['clean_n']} CLEAN CORNERS = 90 READ WITH ABOUT 2.4 DEGREES OF EDGE NOISE (A FOLDED SCATTER READS LOW) | "
            "OPPOSITE EDGES PARALLEL WITHIN 1 TO 7 DEGREES",BODY,12)
 fig.savefig(OUT+'03.png',facecolor=BG); plt.close(fig)
 
-# ---------------- 04 POINT GROUP ----------------
+# ---------------- 04 POINT GROUP (CORRECTED AFTER EVALUATION, 2026-10-04) ----------------
+# THE EVALUATED SLIDE GAVE m3m (KEPT IN THE GIT HISTORY AT COMMIT 1bebbc3). THE INSTRUCTOR'S
+# CLUE AFTER EVALUATION: THE CRYSTALS HAVE NO 3 OR -3 AXIS. A 3-FOLD OF THE CRYSTAL MUST TURN
+# THE WHOLE CRYSTAL ONTO ITSELF, WHICH NEEDS L = W = T; A SQUARE CORNER IS 3-FOLD ONLY LOCALLY.
 def sproj(v):
     v=np.array(v,float); v=v/np.linalg.norm(v)
     if v[2]<0: v=-v
     return np.array([v[0],v[1]])/(1+v[2])
-def stereo_m3m(a):
+def stereo_mmm(a):
     a.set_facecolor(PANEL); a.set_aspect('equal'); a.set_xlim(-1.22,1.22); a.set_ylim(-1.22,1.22); a.axis('off')
-    th=np.linspace(0,2*np.pi,400); a.plot(np.cos(th),np.sin(th),color=PEDGE,lw=2.6)
+    th=np.linspace(0,2*np.pi,400); a.plot(np.cos(th),np.sin(th),color=PEDGE,lw=2.6)   # PRIMITIVE = THE MP NORMAL TO c
     MPC='#2C8FB8'
-    for ang in (0,45,90,135):
+    for ang in (0,90):
         r=np.radians(ang); a.plot([-np.cos(r),np.cos(r)],[-np.sin(r),np.sin(r)],color=MPC,lw=1.5)
-    for nrm in [(1,0,1),(-1,0,1),(0,1,1),(0,-1,1)]:
-        nrm=np.array(nrm,float); nrm/=np.linalg.norm(nrm)
-        u=np.cross(nrm,[0,0,1.]) if abs(nrm[2])<0.99 else np.array([1.,0,0]); u/=np.linalg.norm(u); w=np.cross(nrm,u)
-        pts=[]
-        for t in np.linspace(0,np.pi,200):
-            v=np.cos(t)*u+np.sin(t)*w
-            if v[2]<0: v=-v
-            pts.append(sproj(v))
-        pts=np.array(pts); a.plot(pts[:,0],pts[:,1],color=MPC,lw=1.5)
-    def sq(p,s=0.07,c='#7FE3F2'):
-        a.add_patch(Polygon([[p[0]-s,p[1]-s],[p[0]+s,p[1]-s],[p[0]+s,p[1]+s],[p[0]-s,p[1]+s]],fc='none',ec=c,lw=2.0,zorder=5))
-    def tri(p,s=0.075,c=GREEN):
-        a.add_patch(Polygon([[p[0],p[1]+s],[p[0]-s*0.87,p[1]-s*0.5],[p[0]+s*0.87,p[1]-s*0.5]],fc=c,ec='#07131F',lw=0.8,zorder=5))
-    def lens(p,ang,s=0.07,c='#FF7CA8'):
-        r=np.radians(ang); u=np.array([np.cos(r),np.sin(r)]); v=np.array([-u[1],u[0]])
+    def lens(p,ang,s=0.085,c='#FF7CA8'):
+        p=np.array(p,float); r=np.radians(ang); u=np.array([np.cos(r),np.sin(r)]); v=np.array([-u[1],u[0]])
         a.add_patch(Polygon([p-s*u,p+0.55*s*v,p+s*u,p-0.55*s*v],fc=c,ec='#07131F',lw=0.8,zorder=5))
-    for v in [(0,0,1),(1,0,0),(-1,0,0),(0,1,0),(0,-1,0)]: sq(sproj(v))
-    for v in [(1,1,1),(-1,1,1),(-1,-1,1),(1,-1,1)]: tri(sproj(v))
-    for v in [(1,1,0),(-1,1,0),(-1,-1,0),(1,-1,0)]:
-        p=sproj(v); lens(p,np.degrees(np.arctan2(p[1],p[0]))+90)
-    for v in [(1,0,1),(-1,0,1),(0,1,1),(0,-1,1)]:
+    for v in [(1,1,1),(-1,1,1),(-1,-1,1),(1,-1,1)]:           # WHERE THE WITHDRAWN 3-FOLDS WERE DRAWN
+        p=sproj(v); s_=0.10
+        a.add_patch(Polygon([[p[0],p[1]+s_],[p[0]-s_*0.87,p[1]-s_*0.5],[p[0]+s_*0.87,p[1]-s_*0.5]],
+                            fc='none',ec='#8193A0',lw=1.4,zorder=4))
+        for sg in (1,-1): a.plot([p[0]-0.08,p[0]+0.08],[p[1]-sg*0.08,p[1]+sg*0.08],color=RED,lw=2.2,zorder=6)
+    lens((0,0),0,s=0.11)                                        # 2-FOLD ALONG c, AT THE CENTRE
+    for v in [(1,0,0),(-1,0,0),(0,1,0),(0,-1,0)]:               # 2-FOLDS ALONG a AND b, ON THE PRIMITIVE
         p=sproj(v); lens(p,np.degrees(np.arctan2(p[1],p[0]))+90)
     for v in [(0,0,1),(1,0,0),(-1,0,0),(0,1,0),(0,-1,0)]:
         p=sproj(v); a.add_patch(Circle(p,0.042,fc=AMBER,ec='#07131F',lw=0.6,zorder=7))
         a.add_patch(Circle(p,0.105,fc='none',ec=AMBER,lw=1.6,zorder=7))
-    for p,t,dx,dy in [((0,0),'(001)',0.0,-0.19),((0,-1),'(100)',0.27,-0.09),((1,0),'(010)',-0.02,0.18)]:
+    for p,t,dx,dy in [((0,0),'(001)',0.0,-0.21),((0,-1),'(100)',0.27,-0.09),((1,0),'(010)',-0.02,0.18)]:
         p=np.array(p,float); a.text(p[0]+dx,p[1]+dy,t,color=AMBER,fontsize=10,weight='bold',ha='center',va='center',family='monospace',zorder=8,
                                     bbox=dict(boxstyle='square,pad=0.1',fc=PANEL,ec='none'))
-fig,ax=new_slide('$ ./assign_point_group.sh --form cube --rule holohedry',4)
+fig,ax=new_slide('$ ./assign_point_group.sh --form box --whole-crystal',4)
+T(ax,1800,H-95,'[PART A CORRECTED AFTER EVALUATION, 4 OCT 2026]',RED,13,'bold',ha='right')
 T(ax,120,H-158,'POINT GROUP: OPERATIONS, EXCLUSIONS AND VERDICT',GREEN,23,'bold')
-T(ax,1800,H-158,'[MOST PROBABLE: m$\\bar{3}$m (Oh, CLASS 32)]',AMBER,19,'bold',ha='right')
+T(ax,1800,H-158,'[CORRECTED: mmm (D2h, CLASS 8)]',AMBER,19,'bold',ha='right')
 panel(ax,120,130,560,760)
-T(ax,400,862,'STEREOGRAM: m$\\bar{3}$m WITH THE OBSERVED POLES',CYAN,14,'bold','center')
-a=fig.add_axes([175/W,445/H,450/W,400/H]); stereo_m3m(a)
+T(ax,400,862,'STEREOGRAM: mmm WITH THE OBSERVED POLES',CYAN,14,'bold','center')
+a=fig.add_axes([175/W,445/H,450/W,400/H]); stereo_mmm(a)
 bullets(ax,140,428,[
- ('AMBER','THE 6 OBSERVED FACE POLES {100}'),
- ('SQUARE','4-FOLD  |  TRIANGLE 3-FOLD  |  LENS 2-FOLD'),
- ('LINES','9 MP: PRIMITIVE + 4 DIAMETERS + 4 ARCS'),
+ ('AMBER','THE 6 OBSERVED FACE POLES, 3 PINACOIDS'),
+ ('LENS','2-FOLD, NOT 4-FOLD  |  RED X: NO 3-FOLD'),
+ ('LINES','3 MP: PRIMITIVE + 2 DIAMETERS'),
 ],dy=27,fs=11,marker='',headc=AMBER,pad=7)
-T(ax,140,334,'OPERATION INVENTORY (48), MAPPED ONTO THE CRYSTAL',AMBER,12.5,'bold')
+T(ax,140,334,'OPERATION INVENTORY (8), MAPPED ONTO THE CRYSTAL',AMBER,12.5,'bold')
 bullets(ax,140,302,[
- ('3 4-FOLD','FACE CENTRE TO FACE CENTRE, EACH'),('','WITH A COINCIDENT 2-FOLD AND $\\bar{4}$'),
- ('4 3-FOLD','CORNER TO CORNER, EACH WITH $\\bar{3}$'),
- ('6 2-FOLD','EDGE MIDPOINT TO EDGE MIDPOINT'),
- ('9 MP','3 PARALLEL TO FACES + 6 THROUGH EDGES'),
+ ('3 2-FOLD','FACE CENTRE TO FACE CENTRE, ONE'),('','ALONG EACH EDGE DIRECTION'),
+ ('3 MP','EACH PARALLEL TO ONE FACE PAIR'),
  ('CENTRE i','EVERY FACE HAS A PARALLEL PARTNER'),
+ ('ABSENT','3, $\\bar{3}$ AND 4: NO TURN BUT 180 DEGREES'),('','MAPS THE WHOLE CRYSTAL ONTO ITSELF'),
 ],dy=27,fs=11,marker='[>]',headc=CYAN,pad=9)
 panel(ax,705,130,1095,760)
 T(ax,730,862,'EXCLUSION CHAIN: WHAT EACH CANDIDATE NEEDS AGAINST WHAT THE PHOTOS SHOW',AMBER,13.5,'bold')
 x=730; fs=11.5
-row(ax,x,826,[(0,'CANDIDATE',CYAN),(15,'NEEDS',CYAN),(50,'PHOTOS SHOW',CYAN),(91,'RESULT',CYAN)],fs=fs,w='bold')
+row(ax,x,826,[(0,'CANDIDATE',CYAN),(16.5,'NEEDS',CYAN),(51,'PHOTOS SHOW',CYAN),(91,'RESULT',CYAN)],fs=fs,w='bold')
 rule(ax,x,810,1050)
 CH=[('1, $\\bar{1}$','SOME CORNER (IA) AWAY FROM 90','11 CLEAN CORNERS, 86 TO 90','EXCLUDED',RED),
     ('2, m, 2/m','BOTH ENDS TILTED AND PARALLEL','NONE: THE 6 TILTED ENDS ARE','EXCLUDED',RED),
     ('','(AN OBLIQUE PINACOID)','CHIPPED AND NEVER PARALLEL','',RED),
     ('HEX, TRIGONAL','60, 120 OR RHOMB CORNERS','RIGHT ANGLES ONLY','EXCLUDED',RED),
-    ('mmm, 4/mmm','A FIXED LONG AXIS WITH ITS OWN','L/W WANDERS 1.0 TO 2.0;','RUNNER-UP',AMBER),
-    ('','FACE TYPE (2 OR 3 FORMS)','NO FACE TYPE TIED TO ONE AXIS','',AMBER),
-    ('23, m$\\bar{3}$','STRIATED FACES OR {hk0} FACETS','NONE RESOLVED','NOT INDICATED',MUTE),
-    ('432, $\\bar{4}$3m','TWISTED ETCH PITS, {111} FACETS','NO FACETS BEYOND THE CUBE','NOT INDICATED',MUTE),
-    ('m$\\bar{3}$m','ONE FORM, CUBE {100}: 3 SQUARE','EXACTLY THIS, IN ALL 11','MOST PROBABLE',GREEN),
-    ('','PAIRS OF FACES AT 90','','',GREEN)]
+    ('CUBIC (5)','120-DEGREE TURN ABOUT A BODY','L/W UP TO 2.03; FACES OF 2','EXCLUDED',RED),
+    ('','DIAGONAL: NEEDS L = W = T','KINDS (FROSTED, SMOOTH)','(CORRECTED)',RED),
+    ('TETRAGONAL (7)','A SQUARE SECTION WITH 4','VIEW A FROSTED, VIEW B SMOOTH:','EXCLUDED',RED),
+    ('','ALIKE SIDE FACES (4-FOLD)','SIDE FACES DIFFER; 2:1 LENGTHWAYS','',RED),
+    ('mmm','3 UNLIKE FACE PAIRS AT 90, A','ALL 11 ARE SQUARE-CORNERED BOXES','MOST PROBABLE',GREEN),
+    ('','2-FOLD AND MP NORMAL TO EACH, i','','',GREEN),
+    ('222, mm2','HALF-FACES OR ONE POLAR END','NONE RESOLVED; ENDS CHIPPED','NOT INDICATED',MUTE)]
 for k,(c1,c2,c3,c4,cc) in enumerate(CH):
-    y=785-k*29
-    row(ax,x,y,[(0,c1,GREEN if c1 else BODY),(15,c2),(50,c3),(91,c4,cc)],fs=fs,w='bold' if c4 else 'normal')
+    y=785-k*27
+    row(ax,x,y,[(0,c1,GREEN if c1 else BODY),(16.5,c2),(51,c3),(91,c4,cc)],fs=fs,w='bold' if c4 else 'normal')
 rule(ax,x,488,1050,c='#2B3942')
-T(ax,x,460,'VERDICT: m$\\bar{3}$m',GREEN,21,'bold')
-T(ax,1050,460,'FULL SYMBOL 4/m $\\bar{3}$ 2/m  |  Oh  |  HOLOHEDRAL CUBIC  |  48 OPERATIONS',BODY,12.5)
+T(ax,x,460,'VERDICT: mmm',GREEN,21,'bold')
+T(ax,1000,460,'FULL SYMBOL 2/m 2/m 2/m  |  D2h  |  ORTHORHOMBIC  |  8 OPERATIONS',BODY,12.5)
 bullets(ax,x,420,[
- ('WHY:','THE CUBE {100} ALONE REPRODUCES EVERY FACE AND EVERY ANGLE SEEN; A BOX NEEDS 2 OR 3 FORMS'),
- ('','FOR THE SAME FACES, AND NOTHING MEASURED TIES THE ELONGATION OR A FACE TYPE TO ONE AXIS'),
- ('HOLOHEDRY:','THE CUBE LOOKS THE SAME IN ALL 5 CUBIC CLASSES, SO THE FULL CLASS IS TAKEN, AS IS STANDARD'),
- ('LIMIT:','A TETRAGONAL OR ORTHORHOMBIC BOX HAS THE SAME 90-DEGREE ANGLES, SO FORM ALONE CANNOT'),
- ('','EXCLUDE IT; CENTRE i COMES FROM PARALLEL FACE PAIRS ONLY (NO PIEZO OR PYRO TEST)'),
- ('RANKING:','m$\\bar{3}$m, THEN 4/mmm AND mmm (SAME ANGLES, MORE FORMS); ALL LOWER SYSTEMS FAIL ON ANGLES'),
- ('TEST:','CROSSED POLARISERS (LCD SCREEN + POLARISING FILTER), CLEAR CRYSTAL ON EACH'),
- ('','OF ITS 3 FACE TYPES, TURNED: CUBIC STAYS DARK ON ALL 3; 4/mmm IS DARK ON ONE ONLY;'),
- ('','mmm ON NONE (A BIREFRINGENT VIEW GOES DARK EVERY 90 DEGREES, BRIGHT BETWEEN)'),
-],dy=31,fs=11.5,marker='[>]',headc=CYAN,pad=11)
+ ('CORRECTION:','m$\\bar{3}$m WAS READ OFF ONE SQUARE CORNER, WHICH LOOKS 3-FOLD ONLY LOCALLY. A 3-FOLD'),
+ ('','OF THE CRYSTAL TURNS ALL OF IT: 120 DEGREES SENDS L TO W TO T, SO IT NEEDS L = W = T'),
+ ('WHY mmm:','3 PAIRS OF PARALLEL FACES AT 90, EACH PAIR ITS OWN KIND: A 2-FOLD AND AN MP NORMAL'),
+ ('','TO EACH PAIR AND A CENTRE i; NO OPERATION TURNS ONE PAIR INTO ANOTHER'),
+ ('HOLOHEDRY:','222, mm2 AND mmm ALL GROW THIS BOX; NO HALF-FACES OR POLAR END ARE SEEN, SO mmm'),
+ ('LIMIT:','A SQUARE SECTION ON EVERY CRYSTAL WOULD MAKE IT 4/mmm; CALIPERS ON ALL 3 EDGES DECIDE'),
+ ('TEST:','CROSSED POLARISERS: mmm GOES DARK EVERY 90 DEGREES ON ALL 3 FACE TYPES, NEVER THROUGH A'),
+ ('','FULL TURN; A TETRAGONAL CRYSTAL STAYS DARK ON ONE FACE TYPE, A CUBIC ONE ON ALL 3'),
+ ('NOTE:','CORRECTED AFTER EVALUATION (4 OCTOBER 2026) FOR THE RECORD ONLY, NOT FOR EXTRA MARKS'),
+],dy=31,fs=11.5,marker='[>]',headc=CYAN,pad=13)
 T(ax,120,92,'$ ./assign_point_group.sh --report',ORANGE,17)
-T(ax,120,56,'[RESULT] MOST PROBABLE POINT GROUP m$\\bar{3}$m; RUNNER-UP 4/mmm, THEN mmm; DECIDED BY ONE CROSSED-POLARISER CHECK',GREEN,12.5)
+T(ax,120,56,'[RESULT] CORRECTED POINT GROUP mmm (D2h): NO 3 OR $\\bar{3}$ IN THE WHOLE CRYSTAL; THE EVALUATED m$\\bar{3}$m IS WITHDRAWN',GREEN,12.5)
 fig.savefig(OUT+'04.png',facecolor=BG); plt.close(fig)
 print('A OK')

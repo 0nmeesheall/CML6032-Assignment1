@@ -3,11 +3,13 @@ import matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
 from vt import *
 import slides_a            # SLIDES 01 TO 04 RENDER AT IMPORT
 import slides_q            # QUESTION SLIDES 01a, 04a, 09a
+import slides_notice       # NOTICE SLIDE 02a, ADDED AFTER EVALUATION
 import slides_b as B, slides_c as C, slides_d as D
 from hyst import draw_loop
 R='/data/repo'
 os.makedirs(R+'/figures',exist_ok=True); os.makedirs(R+'/renders',exist_ok=True)
 slides_q.build()
+slides_notice.build()
 for f in (B.s05,B.s06,B.s07,C.s08,C.s09,D.s10,D.s11,D.s12,D.s13,D.s14,D.s15): f()
 # ---- standalone hysteresis figure, dark and light ----
 for tag,dark,fc in (('dark',True,BG),('light',False,WHITE)):

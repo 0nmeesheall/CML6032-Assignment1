@@ -15,8 +15,10 @@ INPUTS
 ------
   CML_SLIDES   DIRECTORY OF SLIDE PNG. DEFAULT ./slides
                FILES NAMED 01.png .. 15.png ARE ANSWER SLIDES AND ARE NARRATED.
-               FILES WITH A LETTER SUFFIX (01a.png, 04a.png, 09a.png) ARE
-               QUESTION SLIDES: THEY ARE NOT NARRATED AND ARE HELD SILENT.
+               FILES WITH A LETTER SUFFIX ARE NOT NARRATED AND ARE HELD SILENT:
+               01a.png, 04a.png AND 09a.png ARE QUESTION SLIDES; 02a.png IS THE
+               POST-EVALUATION NOTICE (ADDED 2026-10-04), HELD LONGER SO THE
+               PASTED FEEDBACK CAN BE READ.
   CML_VOICE    DIRECTORY OF RECORDINGS. DEFAULT ./voicenotes
                ONE FILE PER ANSWER SLIDE. ACCEPTED NAMES, CASE AND SPACING FREE:
                "Slide 7.wav", "slide_7.wav", "07.wav", "7.m4a", "Slide07.mp3" ...
@@ -65,10 +67,13 @@ from pathlib import Path
 
 # ----------------------------------------------------------------- CONFIG
 HERE   = Path(__file__).resolve().parent
-SLIDES = Path(os.environ.get('CML_SLIDES', HERE / 'slides'))
-VOICE  = Path(os.environ.get('CML_VOICE',  HERE / 'voicenotes'))
-WORK   = Path(os.environ.get('CML_WORK',   HERE / 'build'))
-OUT    = Path(os.environ.get('CML_OUT',    HERE / 'CML6032_Assignment1_Nisheal_2025CYS7090.mp4'))
+# RESOLVED TO ABSOLUTE PATHS: THE FFMPEG CONCAT LISTS IN WORK/ NAME THEIR FILES BY PATH, AND A
+# RELATIVE ENTRY IS READ RELATIVE TO THE LIST ITSELF (build/build/norm/...), WHICH BROKE RELATIVE
+# SETTINGS SUCH AS THE NOTEBOOK'S CML_WORK = 'build'.
+SLIDES = Path(os.environ.get('CML_SLIDES', HERE / 'slides')).expanduser().resolve()
+VOICE  = Path(os.environ.get('CML_VOICE',  HERE / 'voicenotes')).expanduser().resolve()
+WORK   = Path(os.environ.get('CML_WORK',   HERE / 'build')).expanduser().resolve()
+OUT    = Path(os.environ.get('CML_OUT',    HERE / 'CML6032_Assignment1_Nisheal_2025CYS7090.mp4')).expanduser().resolve()
 
 FPS           = int(os.environ.get('CML_FPS', 30))
 CRF           = int(os.environ.get('CML_CRF', 20))
@@ -82,6 +87,7 @@ TRIM_DB       = -50
 HEAD_PAD      = float(os.environ.get('CML_HEAD_PAD', 0.25))
 TAIL_PAD      = float(os.environ.get('CML_TAIL_PAD', 0.60))
 QUESTION_HOLD = float(os.environ.get('CML_QUESTION_HOLD', 8.0))
+NOTICE_HOLD   = float(os.environ.get('CML_NOTICE_HOLD', 15.0))
 SHORT_FACTOR  = 0.35
 STRICT        = os.environ.get('CML_STRICT', '0') == '1'
 
@@ -108,7 +114,16 @@ QUESTION_TITLES = {
     '01a': "THE BRIEF: PART A AS ISSUED",
     '04a': "THE BRIEF: PART B SEGMENT 1 AS ISSUED",
     '09a': "THE BRIEF: PART B SEGMENT 2 AS ISSUED",
+    '02a': "NOTICE: PART A CORRECTED AFTER EVALUATION",
 }
+NOTICES = {'02a'}            # HELD FOR NOTICE_HOLD AND LABELLED 'notice' IN THE METADATA
+
+def hold(key):
+    return NOTICE_HOLD if key in NOTICES else QUESTION_HOLD
+
+def kind(it):
+    if it['src'] is not None: return 'answer'
+    return 'notice' if it['slide']['key'] in NOTICES else 'question'
 
 # ------------------------------------------------------------------ UTIL
 class Fail(SystemExit):
@@ -217,7 +232,7 @@ def condition(src, dst, force):
     return True
 
 def silence(dst, secs, force):
-    if dst.exists() and not force: return False
+    if dst.exists() and not force and abs(duration(dst) - secs) < 0.01: return False
     rc, out = sh(['ffmpeg', '-hide_banner', '-nostdin', '-y', '-f', 'lavfi',
                   '-i', f'anullsrc=r=48000:cl=stereo', '-t', f'{secs}',
                   '-c:a', 'pcm_s16le', str(dst)])
@@ -238,7 +253,7 @@ def write_meta(plan, total):
                          'duration': round(it['dur'], 2),
                          'title': it['title'],
                          'slide': it['slide']['key'],
-                         'kind': 'question' if it['src'] is None else 'answer'}
+                         'kind': kind(it)}
                         for it in plan]}
     (OUT.parent / 'chapters.json').write_text(json.dumps(doc, indent=1), encoding='utf-8')
     with (OUT.parent / 'timeline.csv').open('w', newline='', encoding='utf-8') as fh:
@@ -246,7 +261,7 @@ def write_meta(plan, total):
         w.writerow(['slide', 'kind', 'start_s', 'duration_s', 'start_mmss', 'source', 'title'])
         for it in plan:
             w.writerow([it['slide']['key'],
-                        'question' if it['src'] is None else 'answer',
+                        kind(it),
                         f'{it["start"]:.2f}', f'{it["dur"]:.2f}', hms(it['start']),
                         it['src'].name if it['src'] else 'silence', it['title']])
 
@@ -262,6 +277,7 @@ def main():
     print('=' * 78)
     print(f'SLIDES  {SLIDES}\nVOICE   {VOICE}\nWORK    {WORK}\nOUT     {OUT}')
     print(f'DENOISE {"ON" if DENOISE else "OFF"}   QUESTION HOLD {QUESTION_HOLD:.1f} s   '
+          f'NOTICE HOLD {NOTICE_HOLD:.1f} s   '
           f'CRF {CRF}   {FPS} fps\n')
 
     slides  = read_slides()
@@ -276,7 +292,7 @@ def main():
     if have - want:
         raise Fail('RECORDING(S) FOR SLIDE(S) ' + ', '.join(str(n) for n in sorted(have - want))
                    + ' BUT THERE IS NO SUCH ANSWER SLIDE')
-    print(f'{len(answers)} ANSWER SLIDES, {len(quests)} QUESTION SLIDES, '
+    print(f'{len(answers)} ANSWER SLIDES, {len(quests)} HELD SLIDES (QUESTION OR NOTICE), '
           f'{len(notes)} RECORDINGS, ALL PAIRED')
 
     raw = {n: duration(p) for n, p in sorted(notes.items())}
@@ -308,17 +324,17 @@ def main():
         print('PLAN (RAW RECORDING LENGTHS, BEFORE TRIM AND PAD)')
         for it in plan:
             s = it['slide']
-            d = raw[s['n']] if it['src'] else QUESTION_HOLD
+            d = raw[s['n']] if it['src'] else hold(s['key'])
             tag = 'HOLD ' if it['src'] is None else 'VOICE'
             print(f'  {s["key"]:>4}  {tag}  {d:7.2f} s  '
                   f'{it["src"].name if it["src"] else "(silence)"}')
-        print(f'\nRAW TOTAL {sum(raw.values()) + QUESTION_HOLD*len(quests):.1f} s')
+        print(f'\nRAW TOTAL {sum(raw.values()) + sum(hold(q["key"]) for q in quests):.1f} s')
         return
 
     print('CONDITIONING AUDIO')
     for it in plan:
         if it['src'] is None:
-            did = silence(it['wav'], QUESTION_HOLD, force)
+            did = silence(it['wav'], hold(it['slide']['key']), force)
         else:
             did = condition(it['src'], it['wav'], force)
         it['dur'] = duration(it['wav'])
